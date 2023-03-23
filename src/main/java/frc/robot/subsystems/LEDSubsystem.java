@@ -6,7 +6,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
+import frc.robot.Constants.OperatorConstants;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 public class LEDSubsystem extends SubsystemBase {
@@ -17,9 +17,8 @@ public class LEDSubsystem extends SubsystemBase {
 
   public AddressableLED m_led;
   public LEDSubsystem() {
-    m_led = new AddressableLED(9);
-
-    // Reuse buffer
+    m_led = new AddressableLED(OperatorConstants.kDriverControllerPort);
+    m_ledBuffer = new AddressableLEDBuffer(OperatorConstants.kLedCount);
 
     // Default to a length of 60, start empty output
 
@@ -28,11 +27,9 @@ public class LEDSubsystem extends SubsystemBase {
     m_led.setLength(m_ledBuffer.getLength());
 
     // Set the data
-
-    rainbow();
-    m_led.setData(m_ledBuffer);
-
-    m_led.start();
+  //  setColor(255, 0, 0);
+  //  m_led.setData(m_ledBuffer);
+  //  m_led.start();
 
   }
 
@@ -94,6 +91,8 @@ public class LEDSubsystem extends SubsystemBase {
         () -> {
           setColor(255, 0, 0);
           m_led.setData(m_ledBuffer);
+          m_led.start();
+          System.out.println("CODE IS WORKING!! ");
         });
   }
 

@@ -27,7 +27,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   
-  //private final LEDSubsystem m_LedSubsystem = new LEDSubsystem();
+  private final LEDSubsystem m_LedSubsystem = new LEDSubsystem();
 
   public final DigitalInput toplimitSwitch = new DigitalInput(0);
   public final DigitalInput beamBreak = new DigitalInput(2);
@@ -56,14 +56,15 @@ public class RobotContainer {
     
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
     new Trigger(toplimitSwitch::get)
-        // .onTrue(m_LedSubsystem.runRainbow())
-        // .onFalse(m_LedSubsystem.runRed())
-        .onTrue(Commands.runOnce(() -> System.out.print("Clicked Limit!"), m_exampleSubsystem));
+        .onTrue(m_LedSubsystem.runRainbow())
+        .onFalse(m_LedSubsystem.runRed())
+        .onTrue(Commands.runOnce(() -> System.out.print("Clicked Limit! "), m_exampleSubsystem));
 
-    new Trigger(toplimitSwitch::get)
-        // .onTrue(m_LedSubsystem.runRainbow())
-        // .onFalse(m_LedSubsystem.runRed())
-        .onTrue(new RunCommand(() -> System.out.print("Beam Tripped!"), m_exampleSubsystem));
+    //new Trigger(toplimitSwitch::get)
+    m_driverController.b()
+    .onTrue(m_LedSubsystem.runRainbow())
+        .onFalse(m_LedSubsystem.runRed())
+        .onTrue(new RunCommand(() -> System.out.print("Beam Tripped! "), m_exampleSubsystem));
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
@@ -77,6 +78,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return Autos.exampleAuto(m_exampleSubsystem);
+    return m_LedSubsystem.runRed();
   }
 }
